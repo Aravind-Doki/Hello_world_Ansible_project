@@ -41,9 +41,9 @@ edit webapps dir files>> vi <filename>  comment before () Value ClassName field 
 tomcatdown
 tomcatup
 check in browser >> IP address:8090>> manager app>> will prompt login >> but we dont have users so add users with user.xml file under conf diectory in tomcat
-go to tomcat home directory (cd /opt/apache-tomcat-8.5.35/conf)
+go to tomcat home directory (cd /opt/apache-tomcat-8.5.61/conf)
 ls
-vi tomcat-user.xml file
+vi tomcat-users.xml file
  in between start to end copy users below from down -->  this 2ndmark
 <role rolename="manager-gui"/>
 <role rolename="manager-script"/>
@@ -53,8 +53,8 @@ vi tomcat-user.xml file
 <user username="deployer" password="deployer" roles="manager-script"/>
 <user username="tomcat" password="s3cret" roles="manager-gui"/>
 Restart serivce and try to login to tomcat application from the browser. This time it should be Successful
-tomcatup
 tomcatdown
+tomcatup
 view tomcat-users.xml >>  cat tomcat-users.xml >> copy passwd of manager GUI
 check in browser as IP address:8090>> manager app>> will prompt login >> user name tomcat paswd s3cret
 
