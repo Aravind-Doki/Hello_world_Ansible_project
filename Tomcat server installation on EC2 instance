@@ -27,7 +27,7 @@ tomcatup
 tomcatdown
 check in browser by following steps
 take public ip address from ec2 >> check SG in ec2 enable port no 8080 along with 22>> enter IP address:8080 in browser >> we will get apache web page
-change default port number 8080 to 8090 because jenkins server already running on port 8080 by below steps
+change default port number 8080 to 8090 by below steps because jenkins server already running on port 8080 
 Change port number in conf/server.xml file under tomcat home 
 cd /opt/apache-tomcat-8.5.61/conf
 vi server.xml
