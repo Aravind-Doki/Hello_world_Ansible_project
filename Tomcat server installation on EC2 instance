@@ -1,0 +1,64 @@
+Launch Amazon Linux EC2 instance
+sudo su -
+yum install java-1.8*
+java -version
+Install Apache Tomcat
+Google tomcat 8 download (https://tomcat.apache.org/download-80.cgi)
+copy link address in core tar.gz and extract giz file under to /opt
+to check presernt working directrory >> pwd and change directory to cd /opt
+wget <https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.61/bin/apache-tomcat-8.5.61.tar.gz>
+if wget not installed follow> yum -y install wget >> then try
+ls >> tar -xvzf apache-tomcat-8.5.61.tar.gz  for untar and unzip
+to check startup.sh and shutdown.sh 
+ls  >> cd apache-tomcat-8.5.61  >> ls >> cd bin >> ls
+ps -ef | grep tomcat   >> to check out service is running or not.
+check the permissions on services like startup.sh and shutdown.sh >> ls -ltr
+give executing permissions to startup.sh and shutdown.sh which are under bin.
+chmod +x /opt/apache-tomcat-8.5.61/bin/startup.sh shutdown.sh
+we can run individually also as chmod +x startup.sh and #chmod +x shutdown.sh
+to start service>> cd /opt/apache-tomcat-8.5.61/bin  then ./startup.sh
+to stop service>>  cd /opt/apache-tomcat-8.5.61/bin  then  ./shutdown.sh
+we can create a soft link by below to avoid every time we need to come to bin directory to perform ./startup.sh and ./shutdown.sh
+Start service >>  ln -s /opt/apache-tomcat-8.5.61/bin/startup.sh /usr/local/bin/tomcatup
+Stop service  >>  ln -s /opt/apache-tomcat-8.5.61/bin/shutdown.sh /usr/local/bin/tomcatdown
+ps -ef | grep tomcat   >> to check out service is running or not
+after soft link creation we can start and stop the service by using 
+tomcatup
+tomcatdown
+check in browser by following steps
+take public ip address from ec2 >> check SG in ec2 enable port no 8080 along with 22>> enter IP address:8080 in browser >> we will get apache web page
+change default port number 8080 to 8090 because jenkins server already running on port 8080 by below steps
+Change port number in conf/server.xml file under tomcat home 
+cd /opt/apache-tomcat-8.5.61/conf
+vi server.xml
+below check conncter port >> # update port number in the "connecter port" field in server.xml >> :wq!
+restart tomcat after configuration update >> tomcatdown>> #ps -ef | grep tomcat >> tomcatup
+change port number in SG as 8090 then check in browser by changing IP address:8080 to IP address:8090 >> apache web page
+ now application is accessible on port 8090. but tomcat application doesn't allow to login from browser. changing a default parameter in context.xml does address this issue.
+ Tomcat login
+find / -name context.xml 
+edit webapps dir files>> vi <filename>  comment before () Value ClassName field on files as <!-- and at the end of allow row space -->  in another file also do the same 
+tomcatdown
+tomcatup
+check in browser >> IP address:8090>> manager app>> will prompt login >> but we dont have users so add users with user.xml file under conf diectory in tomcat
+go to tomcat home directory (cd /opt/apache-tomcat-8.5.35/conf)
+ls
+vi tomcat-user.xml file
+ in between start to end copy users below from down -->  this 2ndmark
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<role rolename="manager-jmx"/>
+<role rolename="manager-status"/>
+<user username="admin" password="admin" roles="manager-gui, manager-script, manager-jmx, manager-status"/>
+<user username="deployer" password="deployer" roles="manager-script"/>
+<user username="tomcat" password="s3cret" roles="manager-gui"/>
+Restart serivce and try to login to tomcat application from the browser. This time it should be Successful
+tomcatup
+tomcatdown
+view tomcat-users.xml >>  cat tomcat-users.xml >> copy passwd of manager GUI
+check in browser as IP address:8090>> manager app>> will prompt login >> user name tomcat paswd s3cret
+
+
+
+
+
