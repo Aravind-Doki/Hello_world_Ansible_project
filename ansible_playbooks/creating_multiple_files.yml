@@ -1,0 +1,17 @@
+---
+- name: creating multiple files
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+  - name: create multiple items
+    file: 
+      path: /opt/"{{ item }}"
+      state: touch
+      mode: 0755
+      owner: ansadmin
+    with_items:
+    - file1
+    - file2
+    - file3

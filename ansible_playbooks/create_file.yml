@@ -1,0 +1,13 @@
+---
+- name: creating a file
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+  - name: creating a file
+    file: 
+      path: /opt/testfile
+      state: touch
+      mode: 0755
+      owner: ansadmin

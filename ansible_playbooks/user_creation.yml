@@ -1,0 +1,8 @@
+---
+- name: creating a user
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: creating a user aravind
+    user: 
+      name: aravind

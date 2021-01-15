@@ -1,0 +1,11 @@
+---
+- name: remove a directory
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+  - name: remove a directory
+    file: 
+      path: /opt/dir1
+      state: absent
